@@ -28,9 +28,7 @@ class Login extends Component {
     }
 
     handleFieldChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     hasError() {
@@ -61,7 +59,6 @@ class Login extends Component {
         })
         .then(response => {
             if(response.data.isLogged) {
-                // this.setState({ isLoading: false })
                 //Successful login
                 this.props.handleSuccessfulAuth(response.data);
             } else {

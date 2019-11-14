@@ -9,7 +9,6 @@ class Verify extends Component {
 
         this.state = {
             isLoading: false,
-            // token: localStorage.getItem('userToken'),
             alert: false
         }
         

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import axios from 'axios';
-import cookie from 'js-cookie';
 
 import Header from './layouts/Header';
 import Home from './pages/Home';
@@ -23,7 +22,6 @@ class App extends Component {
         this.state = {
             isLoading: true,
             isAuthenticated: false,
-            // token: cookie.get('laravel_string'),
             user: {}
         }
 
@@ -36,11 +34,9 @@ class App extends Component {
 
     checkisLoggedStatus() {
 
-        // if(this.state.token) {
-
-            axios.get('/api/user')
+        axios.get('/api/user')
             .then(response => {
-                if(response.data && !this.state.isAuthenticated) {
+                if (response.data && !this.state.isAuthenticated) {
                     this.setState({
                         isLoading: false,
                         isAuthenticated: true,
@@ -56,33 +52,16 @@ class App extends Component {
             })
             .catch(error => { console.log(error); this.setState({ isLoading: false }) })
 
-        // } else {
-
-        //     this.setState({ isLoading: false })
-
-        // }
-
-            
-    
     }
 
     handleLogin(data) {
 
-        // let laravel_string = Math.random().toString(36).slice(2);
-        // let token = cookie.set('laravel_string', laravel_string);
-        // let token = localStorage.setItem('userToken', data.access_token);
         this.setState({
             isLoading: false,
             isAuthenticated: true,
-            // token: token,
             user: data.user
         })
-        // if(this.state.user.email_verified_at) {
-        //     // this.props.history.push('/home');
-        //     window.location.href="/home";
-        // } else {
-        //     window.location.href="/verify";
-        // }
+       
     }
 
     handleSuccessfulAuth(data) {
