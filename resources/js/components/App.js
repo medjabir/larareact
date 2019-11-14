@@ -50,7 +50,7 @@ class App extends Component {
                     })
                 }
             })
-            .catch(error => { console.log(error); this.setState({ isLoading: false }) })
+            .catch(error => { this.setState({ isLoading: false }); console.clear(); })
 
     }
 

@@ -20,13 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth:api'], function() {
 
     Route::post('logout', 'AuthApiController@logout');
+    Route::get('email/resend', 'VerificationApiController@resend')->middleware('auth:api')->name('verificationapi.resend');
 });
 
 Route::post('login', 'AuthApiController@login');
 Route::post('register', 'AuthApiController@register');
 
 Route::get('email/verify/{id}/{hash}', 'VerificationApiController@verify')->name('verificationapi.verify');
-Route::get('email/resend', 'VerificationApiController@resend')->middleware('auth:api')->name('verificationapi.resend');
 
 Route::post('password/email', 'ResetPasswordRequestApiController@sendResetLinkEmail');
 Route::post('password/reset', 'ResetPasswordApiController@reset');
