@@ -40,8 +40,6 @@ class AuthApiController extends Controller
             
             $request['password'] = Hash::make($request->password);
 
-            // $user = User::create($request->all());
-
             $user = new User;
             $user->name = $request->name;
             $user->email = $normalized_email;
