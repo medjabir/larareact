@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
+use Helper;
 
 class AuthApiController extends Controller
 {
@@ -15,7 +16,15 @@ class AuthApiController extends Controller
 
     public function register(Request $request) {
 
-        $validation = Validator::make($request->all(), [
+        // Gmail address normalization
+        $normalized_email = Helper::normalized_email($request->email);
+
+        $validation = Validator::make([
+            'name' => $request->name,
+            'email' => $normalized_email,
+            'password' => $request->password,
+            'password_confirmation' => $request->password_confirmation
+        ], [
             'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed'
@@ -31,7 +40,14 @@ class AuthApiController extends Controller
             
             $request['password'] = Hash::make($request->password);
 
-            $user = User::create($request->all());
+            // $user = User::create($request->all());
+
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $normalized_email;
+            $user->unnormalized_email = $request->email;
+            $user->password = $request->password;
+            $user->save();
 
             // $accessToken = $user->createToken('userToken')->accessToken;
 
@@ -49,7 +65,14 @@ class AuthApiController extends Controller
 
     public function login(Request $request) {
 
-        $validatedLoginData = Validator::make($request->all(), [
+        // Gmail address normalization
+        $normalized_email = Helper::normalized_email($request->email);
+
+        $validatedLoginData = Validator::make([
+
+            'email' => $normalized_email,
+            'password' => $request->password
+        ], [
             'email' => 'email|required',
             'password' => 'required'
         ]);
