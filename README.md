@@ -2,7 +2,7 @@
 
 ### [Mohammed Jabir -> <med.jabir@gmail.com>]
 
-Laravel and reactjs love affair ; Laravel/Reactjs SPA 
+Laravel and reactjs love affair : Laravel/Reactjs SPA 
 
 1 - Laravel on the backend (providing API endpoints)<br />
 2 - Reactjs on the frontend (using Axios to send requests to API endpoints)<br />
